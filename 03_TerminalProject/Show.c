@@ -1,6 +1,7 @@
 #include <curses.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 WINDOW *create_newwin( int height, int width, int starty, int startx);
 void destroy_win( WINDOW *local_win);
@@ -8,7 +9,7 @@ void destroy_win( WINDOW *local_win);
 const int lines_batch = 1024;
 
 int
-readfile( char ***lines, int *lines_num, const char *filename)
+readfile( char ***lines, int *lines_num, char filename[])
 {
     FILE *file;
     int batches = 1;
@@ -44,7 +45,7 @@ readfile( char ***lines, int *lines_num, const char *filename)
 
 void
 drawText( WINDOW *wnd, char **lines,
-               int lines_num, int top, int bot)
+          int lines_num, int top, int bot)
 {
     for ( int i = top, pos = 1; i < bot; ++i, ++pos )
     {
@@ -52,67 +53,74 @@ drawText( WINDOW *wnd, char **lines,
     }
 }
 
-int main(int argc, char *argv[])
-{	
+int main(int argc, char **argv)
+{    
     WINDOW *my_win;
     char **lines;
     int lines_num;
-	int startx, starty, width, height, row, col;
-	int ch;
+    int startx, starty, width, height, row, col;
+    int ch;
     int page_size;
     int top, bot;
 
-    readfile( &lines, &lines_num, argv[1]);
+    char filename[128];
+    strcpy(filename, argv[1]);
+    if ( readfile( &lines, &lines_num, filename) == -1 )
+    {
+        return -1;
+    }
 
-	initscr();
-	cbreak();
+    initscr();
+    cbreak();
+    noecho();
     keypad(stdscr, TRUE);
-
     getmaxyx(stdscr,row,col);
-	page_size = height = row - 3;
+    page_size = height = row - 3;
     top = 0;
     bot = page_size - 2;
-	width = col - 3;
-	starty = (row - height) / 2;
-	startx = (col - width) / 2;
-	refresh(); 
-	printw("Filename: %s", argv[1]);
+    width = col - 3;
+    starty = (row - height) / 2;
+    startx = (col - width) / 2;
+    refresh(); 
+    printw("Filename: %s", argv[1]);
 
-	my_win = create_newwin(height, width, starty, startx);
+    my_win = create_newwin(height, width, starty, startx);
     drawText( my_win, lines, lines_num, top, bot);
     wborder(my_win, 0,0,0,0,0,0,0,0);
     wrefresh(my_win);
 
-	while((ch = getch()) != KEY_F(1))
-	{	switch(ch)
-		{
+    while((ch = getch()) != KEY_F(1))
+    {
+        switch(ch)
+        {
             
-			case KEY_UP:
+            case KEY_UP:
                 if ( top == 0 )
                 {
                     break;
                 }
                 top--;
                 bot--;
-				break;
-			case KEY_DOWN:
+                break;
+            case KEY_DOWN:
                 if ( bot == lines_num )
                 {
                     break;
                 }
                 top++;
                 bot++;
-				break;	
-		}
-        werase(my_win);
-        my_win = create_newwin(height, width, starty, startx);
+                break;
+        }
+        wclear(my_win);
+        // werase(my_win);
+        // my_win = create_newwin(height, width, starty, startx);
         drawText( my_win, lines, lines_num, top, bot);
         wborder(my_win, 0,0,0,0,0,0,0,0);
         wrefresh(my_win);
-	}
+    }
 
-	endwin();
-	return 0;
+    endwin();
+    return 0;
 }
 
 WINDOW *
@@ -128,7 +136,7 @@ create_newwin(int height, int width, int starty, int startx)
 }
 
 void destroy_win(WINDOW *local_win)
-{	
+{    
     wborder(local_win, ' ', ' ', ' ',' ',' ',' ',' ',' ');
 
     wrefresh(local_win);
