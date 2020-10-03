@@ -103,7 +103,7 @@ int main(int argc, char **argv)
     wborder( my_win, 0,0,0,0,0,0,0,0);
     wrefresh( my_win);
 
-    while ( (ch = getch()) != KEY_F(1) )
+    while ( (ch = getch()) != 27 )  // ESC - code 27
     {
         switch ( ch )
         {
