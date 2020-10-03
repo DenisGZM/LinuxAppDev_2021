@@ -9,7 +9,23 @@ void destroy_win( WINDOW *local_win);
 const int lines_batch = 1024;
 
 int
-readfile( char ***lines, int *lines_num, char filename[])
+min( int a, int b)
+{
+    return a < b ? a : b;
+}
+
+void
+freelines( char ***lines, int lines_num)
+{
+    for ( int i = 0; i < lines_num; ++i )
+    {
+        free((*lines)[i]);
+    }
+    free(*lines);
+}
+
+int
+readfile( char ***lines, int *lines_num, char *filename)
 {
     FILE *file;
     int batches = 1;
@@ -47,7 +63,7 @@ void
 drawText( WINDOW *wnd, char **lines,
           int lines_num, int top, int bot)
 {
-    for ( int i = top, pos = 1; i < bot; ++i, ++pos )
+    for ( int i = top, pos = 1; i < min(lines_num,bot); ++i, ++pos )
     {
         mvwaddstr( wnd, pos, 1,lines[i]);
     }
@@ -63,7 +79,7 @@ int main(int argc, char **argv)
     int page_size;
     int top, bot;
 
-    if ( readfile( &lines, &lines_num, argv[1]) == -1 )     // Something strange 
+    if ( readfile( &lines, &lines_num, argv[1]) == -1 )
     {
         return -1;
     }
@@ -93,7 +109,7 @@ int main(int argc, char **argv)
         {
             
             case KEY_UP:
-                if ( top == 0 )
+                if ( top <= 0 )
                 {
                     break;
                 }
@@ -101,7 +117,7 @@ int main(int argc, char **argv)
                 bot--;
                 break;
             case KEY_DOWN:
-                if ( bot == lines_num )
+                if ( bot >= lines_num )
                 {
                     break;
                 }
@@ -110,14 +126,13 @@ int main(int argc, char **argv)
                 break;
         }
         wclear( my_win);
-        // werase(my_win);
-        // my_win = create_newwin(height, width, starty, startx);
         drawText( my_win, lines, lines_num, top, bot);
         wborder( my_win, 0,0,0,0,0,0,0,0);
         wrefresh( my_win);
     }
 
     endwin();
+    freelines(&lines, lines_num);
     return 0;
 }
 
