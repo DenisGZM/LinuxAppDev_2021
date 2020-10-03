@@ -69,7 +69,8 @@ drawText( WINDOW *wnd, char **lines,
     }
 }
 
-int main(int argc, char **argv)
+int
+main(int argc, char **argv)
 {    
     WINDOW *my_win;
     char **lines;
@@ -148,7 +149,8 @@ create_newwin( int height, int width, int starty, int startx)
     return local_win;
 }
 
-void destroy_win( WINDOW *local_win)
+void
+destroy_win( WINDOW *local_win)
 {    
     wborder( local_win, ' ', ' ', ' ',' ',' ',' ',' ',' ');
 
