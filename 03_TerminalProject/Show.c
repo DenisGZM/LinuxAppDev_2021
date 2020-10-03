@@ -63,9 +63,7 @@ int main(int argc, char **argv)
     int page_size;
     int top, bot;
 
-    char filename[128];
-    strcpy(filename, argv[1]);
-    if ( readfile( &lines, &lines_num, filename) == -1 )
+    if ( readfile( &lines, &lines_num, argv[1]) == -1 )     // Something strange 
     {
         return -1;
     }
@@ -73,8 +71,8 @@ int main(int argc, char **argv)
     initscr();
     cbreak();
     noecho();
-    keypad(stdscr, TRUE);
-    getmaxyx(stdscr,row,col);
+    keypad( stdscr, TRUE);
+    getmaxyx( stdscr,row,col);
     page_size = height = row - 3;
     top = 0;
     bot = page_size - 2;
@@ -84,14 +82,14 @@ int main(int argc, char **argv)
     refresh(); 
     printw("Filename: %s", argv[1]);
 
-    my_win = create_newwin(height, width, starty, startx);
+    my_win = create_newwin( height, width, starty, startx);
     drawText( my_win, lines, lines_num, top, bot);
-    wborder(my_win, 0,0,0,0,0,0,0,0);
-    wrefresh(my_win);
+    wborder( my_win, 0,0,0,0,0,0,0,0);
+    wrefresh( my_win);
 
-    while((ch = getch()) != KEY_F(1))
+    while ( (ch = getch()) != KEY_F(1) )
     {
-        switch(ch)
+        switch ( ch )
         {
             
             case KEY_UP:
@@ -111,12 +109,12 @@ int main(int argc, char **argv)
                 bot++;
                 break;
         }
-        wclear(my_win);
+        wclear( my_win);
         // werase(my_win);
         // my_win = create_newwin(height, width, starty, startx);
         drawText( my_win, lines, lines_num, top, bot);
-        wborder(my_win, 0,0,0,0,0,0,0,0);
-        wrefresh(my_win);
+        wborder( my_win, 0,0,0,0,0,0,0,0);
+        wrefresh( my_win);
     }
 
     endwin();
@@ -124,21 +122,21 @@ int main(int argc, char **argv)
 }
 
 WINDOW *
-create_newwin(int height, int width, int starty, int startx)
+create_newwin( int height, int width, int starty, int startx)
 {
     WINDOW *local_win;
 
-    local_win = newwin(height, width, starty, startx);
-    box(local_win, 0 , 0);
-    wrefresh(local_win);
+    local_win = newwin( height, width, starty, startx);
+    box( local_win, 0 , 0);
+    wrefresh( local_win);
 
     return local_win;
 }
 
-void destroy_win(WINDOW *local_win)
+void destroy_win( WINDOW *local_win)
 {    
-    wborder(local_win, ' ', ' ', ' ',' ',' ',' ',' ',' ');
+    wborder( local_win, ' ', ' ', ' ',' ',' ',' ',' ',' ');
 
-    wrefresh(local_win);
-    delwin(local_win);
+    wrefresh( local_win);
+    delwin( local_win);
 }
