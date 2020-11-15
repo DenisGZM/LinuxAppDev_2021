@@ -1,0 +1,2 @@
+gitclean:
+	git clean -fd
