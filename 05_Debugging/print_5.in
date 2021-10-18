@@ -1,0 +1,14 @@
+br print_range
+r 1 12  > /dev/null
+watch i if i % 5 == 0
+echo @@@
+p start
+echo @@@
+p end
+echo @@@
+p step
+while 1
+    c
+    echo @@@
+    p i
+end

@@ -1,0 +1,19 @@
+br print_range
+r -100 100 3  > /dev/null
+watch i
+echo @@@
+p start
+echo @@@
+p end
+echo @@@
+p step
+ignore 2 27
+c
+set $count = 8
+while $count > 0
+    echo @@@
+    p i
+    set $count = $count - 1
+    c
+end
+
