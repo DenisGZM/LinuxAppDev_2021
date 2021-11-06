@@ -69,9 +69,6 @@ int main(void)
     {
         hash_name = strtok( line, space);
         hash_input = strtok( NULL, space);
-        printf("Origin hash_name = %s\n", hash_name);
-        printf("Origin input = %s\n", hash_input);
-
         hash_input = strtok( hash_input, newline);
 
         if ( !hash_input )
@@ -95,10 +92,6 @@ int main(void)
             hash_input = hash_input + 1;
         }
 
-
-        printf("Processed hash_name = %s\n", hash_name);
-        printf("Processed input = %s\n", hash_input);
-
         if ( is_file )
         {
             int res = rhash_file( hash_id, hash_input, digest);
@@ -120,7 +113,7 @@ int main(void)
         rhash_print_bytes( output, digest, rhash_get_digest_size( hash_id),
                            (is_b64_out ? RHPR_BASE64 : RHPR_HEX));
         
-        printf("%s\n", output);
+        printf("%s  %s\n", output, hash_input);
 #if defined( NO_READLINE ) || !defined( HAVE_LIBREADLINE )
         if ( line )
         {

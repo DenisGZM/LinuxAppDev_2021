@@ -6,3 +6,6 @@ rhasher_SOURCES=src/rhasher.c
 
 gitclean:
 	git clean -df
+
+test: rhasher
+	./test.sh
