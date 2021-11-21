@@ -31,12 +31,9 @@ int main( int argc, char **argv)
     input_t in;
     parceArgv( argc, argv, &in);
     char error_buf[ERROR_BUF_LEN];
-    // size_t len = 0;
-    // size_t read;
     regex_t rexpr;
     int res;
 
-    // char search[] = "s/(.+)/(.+)/";
     res = regcomp( &rexpr, in.regexp, EXPR_FLAGS);
     if ( res )
     {
@@ -55,15 +52,18 @@ int main( int argc, char **argv)
     size_t cur_size = 0;
     size_t res_size = 128;
     char *result = malloc( res_size);
+    if ( !result )
+    {
+        perror("Couldn't alloc memory, bb\n");
+        return 1;
+    }
+
     char *token;
     size_t token_size;
 
     // Copy begin before match.
-    printf("%s, %ld\n", in.string, strlen(in.string));
-    printf("Whole match %d:%d\n", expr_parts[0].rm_so, expr_parts[0].rm_eo);
     token = in.string;
     token_size = expr_parts[0].rm_so;
-
     if ( token && token_size > 0 )
     {
         while ( token_size + cur_size > res_size )
@@ -81,7 +81,6 @@ int main( int argc, char **argv)
     }
 
     char *handle = in.substitution;
-    // while (  handle[0] != 0 )
     do
     {
         int sub_expr = 0;
@@ -131,34 +130,13 @@ int main( int argc, char **argv)
         {
             strncpy( result + cur_size, token, token_size);
             cur_size += token_size;
-        } else
-        {
-            printf("???\n");
         }
+
         if ( !sub_expr )
         {
             handle += token_size;
         }
     } while ( handle[0] != 0);
-
-    // token = strtok( in.substitution, "\\");
-    // token_size = strlen( token);
-
-    // while() = 
-    // hash_input = strtok( NULL, space);
-    // hash_input = strtok( hash_input, newline);
-    // printf("%d : %d\n", expr_parts[1].rm_so, expr_parts[1].rm_eo);
-    // size_t size = expr_parts[1].rm_eo - expr_parts[1].rm_so;
-    // regexpr = malloc( size);
-    // strncpy( regexpr, &line[expr_parts[1].rm_so], size);
-    // puts( regexpr);
-
-    // printf("%d : %d\n", expr_parts[2].rm_so, expr_parts[2].rm_eo);
-    // size = expr_parts[2].rm_eo - expr_parts[2].rm_so;
-    // substitution = malloc( size);
-    // strncpy( substitution, &line[expr_parts[2].rm_so], size);
-    // puts( substitution);
-
 
     // Copy end after match.
     token = in.string + expr_parts[0].rm_eo;
