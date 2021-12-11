@@ -322,8 +322,7 @@ char *toRoman( int num)
 
 const char *argp_program_version =
   "1.0";
-const char *argp_program_bug_address =
-  "no-reply@somewhere.com";
+const char *argp_program_bug_address = "dengzmm@gmail.com";
 
 /* Program documentation. */
 static char *doc;
@@ -331,7 +330,6 @@ static char *doc;
 /* The options we understand. */
 static struct argp_option options[2];
  
-
 /* Used by main to communicate with parse_opt. */
 struct arguments
 {
@@ -385,7 +383,7 @@ int main(int argc, char **argv)
 
     /* Parse our arguments; every option seen by parse_opt will
      be reflected in arguments. */
-    // argp_parse (&argp, argc, argv, 0, 0, &arguments);
+    argp_parse (&argp, argc, argv, 0, 0, &arguments);
     char answ[8];
     int l = 0, r = 100, m;
     while( l + 1 < r  )
