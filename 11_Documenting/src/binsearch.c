@@ -385,7 +385,7 @@ int main(int argc, char **argv)
     bindtextdomain("guess", "./");
     textdomain("guess");
 
-    doc = _("Binary-search-guess-num game!");
+    doc = _("Binary-search-guess-num game!\nWith possible convertation from decimal to roman numbers and back!\nDomain of numbers: [1..100]\n");
     options[0].name = "roman";
     options[0].key = 'r';
     options[0].doc = _("Use roman numbers");
@@ -403,7 +403,7 @@ int main(int argc, char **argv)
 
     /* Parse our arguments; every option seen by parse_opt will
      be reflected in arguments. */
-    argp_help( &argp, stderr, 0, "What?");
+    // argp_help( &argp, stderr, 0, "What?");
     argp_parse(&argp, argc, argv, 0, 0, &arguments);
     char answ[8];
     int l = 0, r = 100, m;
