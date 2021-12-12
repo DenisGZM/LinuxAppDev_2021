@@ -7,7 +7,8 @@
 /**
  * Convert roman num to decimal
  * Domain: 1..100
- * @rom - roman num string
+ * @param rom - roman num string
+ * @return integer number
  */
 int fromRoman( char *rom)
 {
@@ -217,7 +218,8 @@ int fromRoman( char *rom)
 
 /**
  * Convert decimal num to roman num
- * @num - decimal num
+ * @param num - decimal num
+ * @return roman number string
  */
 char *toRoman( int num)
 {
@@ -343,14 +345,14 @@ static struct argp_option options[2];
 /* Used by main to communicate with parse_opt. */
 struct arguments
 {
-  int is_roman;
+  int is_roman;         /** < Is roman numbers used? */
 };
 
 /**
  * Parse a single option.
- * @key   - parsed key
- * @arg   - argument
- * @state - current state
+ * @param key   - parsed key
+ * @param arg   - argument
+ * @param state - current state
  */
 static error_t
 parse_opt (int key, char *arg, struct argp_state *state)
@@ -376,8 +378,8 @@ static struct argp argp;
 
 /**
  * Entry point for program
- * @argc - argument count
- * @argv - array of arguments strings
+ * @param argc - argument count
+ * @param argv - array of arguments strings
  */
 int main(int argc, char **argv)
 {

@@ -5,6 +5,10 @@ lang:
 	mkdir -p ru_RU/LC_MESSAGES
 	msgfmt po/ru/guess.po -o ru_RU/LC_MESSAGES/guess.mo
 
+@DX_RULES@
+
+all-local:	doxygen-doc
+
 clean-gen: gitclean
 
 gitclean:
