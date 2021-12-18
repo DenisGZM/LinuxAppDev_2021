@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Guess Num 0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-12 13:23+0300\n"
+"POT-Creation-Date: 2021-12-18 18:29+0300\n"
 "Last-Translator:  <dengzm@desktop-n2arhns.localdomain>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: src/binsearch.c:388
+#: binsearch.c:390
 msgid ""
 "Binary-search-guess-num game!\n"
 "With possible convertation from decimal to roman numbers and back!\n"
@@ -27,20 +27,20 @@ msgstr ""
 "С возможностью конвертации из десятичных чисел в римские и обратно\n"
 "Область чисел: [1..100]\n"
 
-#: src/binsearch.c:391
+#: binsearch.c:393
 msgid "Use roman numbers"
 msgstr "Использовать римские цифры"
 
-#: src/binsearch.c:415
+#: binsearch.c:417
 #, c-format
 msgid "Is your number more than %s? [y/[n]] "
 msgstr "Ваше число больше %s? [д/[н]] "
 
-#: src/binsearch.c:417
+#: binsearch.c:419
 msgid "y"
 msgstr "д"
 
-#: src/binsearch.c:426
+#: binsearch.c:428
 #, c-format
 msgid "Your number = %s\n"
 msgstr "Ваше число = %s\n"
