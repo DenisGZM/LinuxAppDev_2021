@@ -384,8 +384,8 @@ static struct argp argp;
 int main(int argc, char **argv)
 {
     setlocale( LC_ALL, "");
-    bindtextdomain("guess", "./");
-    textdomain("guess");
+    bindtextdomain("binsearch", "./");
+    textdomain("binsearch");
 
     doc = _("Binary-search-guess-num game!\nWith possible convertation from decimal to roman numbers and back!\nDomain of numbers: [1..100]\n");
     options[0].name = "roman";
